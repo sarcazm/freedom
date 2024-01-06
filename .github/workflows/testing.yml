@@ -1,21 +1,22 @@
 name: Run Test
 on: push
 jobs:
-  run_test: ubuntu-latest
-  steps:
-    - name: Ger repository code
-      uses: actions/checkout@v4
+  run_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ger repository code
+        uses: actions/checkout@v4
 
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        java-version: 17
-        distribution: 'corretto'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: 6.5
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 6.5
 
-    - name: Run all tests
-      run: ./gradlew test
+      - name: Run all tests
+        run: ./gradlew test
