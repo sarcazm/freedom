@@ -1,0 +1,24 @@
+---
+- include_tasks: installation.yml
+- include_tasks: configuration.yml
+
+- name: Restart postgresql
+  become: yes
+  systemd:
+    name: postgresql
+    state: started
+    daemon_reload: true
+
+- name: Change directories permissions for metrics
+  become: yes
+  file:
+    path: "{{ data_directory }}"
+    state: directory
+    mode: 0755
+
+- name: Change directories permissions for metrics
+  become: yes
+  file:
+    path: "{{ logs_directory }}"
+    state: directory
+    mode: 0755

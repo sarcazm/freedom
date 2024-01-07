@@ -1,0 +1,49 @@
+---
+- name: Install lvm2
+  become: yes
+  apt:
+    name: lvm2
+    state: latest
+    update_cache: true
+
+- name: Create a volume group
+  lvg:
+    vg: "{{vg}}"
+    pvs: "{{pvs}}"
+    pvresize: yes
+
+- name: Create a logical volume for data
+  become: yes
+  lvol:
+    state: present
+    vg: "{{vg}}"
+    lv: "{{lv}}"
+    size: "{{lv_size}}"
+    pvs: "{{pvs}}"
+
+- name: Install xfsprogs
+  become: yes
+  apt:
+    name: xfsprogs
+    state: latest
+    update_cache: true
+
+- name: Create a xfs filesystem for lv
+  become: yes
+  filesystem:
+    fstype: xfs
+    dev: "{{device_path}}"
+
+- name: Create directory
+  become: yes
+  file:
+    path: "{{directory}}"
+    state: directory
+
+- name: Mount directory
+  become: yes
+  mount:
+    src: "{{device_path}}"
+    path: "{{directory}}"
+    fstype: xfs
+    state: mounted

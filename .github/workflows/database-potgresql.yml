@@ -1,0 +1,20 @@
+name: Install Database Postgresql
+on: workflow_dispatch
+jobs:
+  install_database_postgresql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml
+        env:
+          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+

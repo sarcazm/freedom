@@ -1,0 +1,56 @@
+---
+- name: Create lvm for postgresql data
+  become: yes
+  hosts: freedom.home.ru
+  roles:
+    - ./roles/lvm
+  vars:
+    vg: data
+    pvs: /dev/vdb
+    lv: postgresql_data
+    lv_size: 1G
+    device_path: /dev/data/postgresql_data
+    directory: /var/lib/postgresql/14/main
+
+- name: Create lvm for postgresql logs
+  become: yes
+  hosts: freedom.home.ru
+  roles:
+    - ./roles/lvm
+  vars:
+    vg: data
+    pvs: /dev/vdb
+    lv: postgresql_logs
+    lv_size: 10M
+    device_path: /dev/data/postgresql_logs
+    directory: /var/log/postgresql
+
+- name: Install Postgresql
+  become: yes
+  hosts: freedom.home.ru
+  roles:
+    - ./roles/postgresql-server
+  vars:
+    data_directory: /var/lib/postgresql/14/main
+    logs_directory: /var/log/postgresql
+
+- name: Create Postgresql databases
+  become: yes
+  hosts: freedom.home.ru
+  roles:
+    - ./roles/postgresql-database
+  vars:
+    databases:
+      - freedom
+
+- name: Create service user with access to Postgresql databases
+  become: yes
+  hosts: freedom.home.ru
+  roles:
+    - ./roles/postgresql-user
+  vars:
+    user_name: freedom-butler
+    user_password: p5DhmwF~vgmkgSeH
+    privileges: ALL
+    databases:
+      - freedom

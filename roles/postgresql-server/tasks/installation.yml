@@ -1,0 +1,26 @@
+---
+- name: Add GPG apt Key
+  become: yes
+  apt_key:
+    url: https://art.x5.ru/artifactory/debian-postgresql-remote/ACCC4CF8.asc
+    state: present
+
+- name: Add repository
+  become: yes
+  apt_repository:
+    repo: deb https://art.x5.ru/artifactory/debian-postgresql-remote bullseye-pgdg main
+    state: present
+
+- name: Update apt and install postgresql
+  become: yes
+  apt:
+    name: postgresql-14
+    state: latest
+    update_cache: true
+
+- name: Check postgresql started
+  become: yes
+  systemd:
+    name: postgresql
+    state: started
+    daemon_reload: true

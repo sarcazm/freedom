@@ -1,0 +1,21 @@
+---
+- name: Check postgresql started
+  become: yes
+  systemd:
+    name: postgresql
+    state: started
+    daemon_reload: true
+
+- name: Install required system packages
+  become: yes
+  apt:
+    pkg:
+      - python3-psycopg2
+    state: latest
+    update_cache: true
+
+- name: Create database
+  become: yes
+  postgresql_db:
+    db: "{{ item }}"
+  loop: "{{ databases }}"

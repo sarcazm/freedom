@@ -1,0 +1,37 @@
+---
+- name: Copy pg_hba.conf
+  copy:
+    src: pg_hba.conf
+    dest: /etc/postgresql/14/main
+
+- name: Copy postgresql.conf
+  copy:
+    src: postgresql.conf
+    dest: /etc/postgresql/14/main
+
+- name: Grant data directories ownership to postgres
+  become: yes
+  file:
+    path: "{{data_directory}}"
+    state: directory
+    recurse: yes
+    owner: postgres
+    group: postgres
+    mode: 0700
+
+- name: Grant logs directories ownership to postgres
+  become: yes
+  file:
+    path: "{{logs_directory}}"
+    state: directory
+    recurse: yes
+    owner: postgres
+    group: postgres
+    mode: 0700
+
+- name: Restart postgresql
+  become: yes
+  systemd:
+    name: postgresql
+    state: restarted
+    daemon_reload: true
