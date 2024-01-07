@@ -1,8 +1,5 @@
 name: Deploy App
-on:
-  push:
-    branches:
-      - develop
+on: workflow_dispatch
 jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
