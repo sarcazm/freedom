@@ -12,7 +12,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ansible
 
+      - name: Add host to known_hosts
+        run: ssh-keyscan -t rsa your_server_ip >> ~/.ssh/known_hosts
+
       - name: Run Ansible playbook
         run: |
-          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -e "ANSIBLE_PRIVATE_KEY=${{ secrets.ANSIBLE_PRIVATE_KEY }}"
-
+          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no'
+        env:
+          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
