@@ -8,7 +8,7 @@
     vg: data
     pvs: /dev/vdb
     lv: postgresql_data
-    lv_size: 1G
+    lv_size: 500M
     device_path: /dev/data/postgresql_data
     directory: /var/lib/postgresql/14/main
 

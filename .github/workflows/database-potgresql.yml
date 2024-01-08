@@ -12,6 +12,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ansible
 
+      - name: Install ansible in remote server
+
       - name: Run Ansible playbook
         run: |
           ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml
