@@ -14,7 +14,7 @@ jobs:
 
       - name: Run Ansible playbook
         run: |
-          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml
+          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no'
         env:
           ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
 
