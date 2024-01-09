@@ -18,6 +18,11 @@ jobs:
       - name: Add host to known_hosts
         run: ssh-keyscan -t rsa 212.57.126.138 >> ~/.ssh/known_hosts
 
+      - name: Add SSH key to agent
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add -L          
+
       - name: Run Ansible playbook
         run: |
           ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
