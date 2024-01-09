@@ -21,7 +21,8 @@ jobs:
       - name: Add SSH key to agent
         run: |
           eval "$(ssh-agent -s)"
-          ssh-add -L          
+          echo "${{ secrets.ANSIBLE_PRIVATE_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
+          ssh-add -L
 
       - name: Run Ansible playbook
         run: |
