@@ -16,6 +16,7 @@ jobs:
         run: |
           mkdir "$HOME/.ssh"
           echo "${{ secrets.ANSIBLE_PRIVATE_KEY }}" > "$HOME/.ssh/id_rsa"
+          chmod 700 "$HOME/.ssh/"
           chmod 600 "$HOME/.ssh/id_rsa"
 
       - name: Run Ansible playbook
