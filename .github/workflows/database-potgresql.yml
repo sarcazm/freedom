@@ -15,7 +15,7 @@ jobs:
       - name: Add SSH key to agent
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.ANSIBLE_PRIVATE_KEY }}" > ~/.ssh/id_rsa
 
       - name: Add host to known_hosts
         run: ssh-keyscan -t rsa 212.57.126.138 >> ~/.ssh/known_hosts
