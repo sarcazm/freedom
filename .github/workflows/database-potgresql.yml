@@ -16,11 +16,11 @@ jobs:
         env:
           ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_rsa
+          install -m 600 -D /dev/null .ssh/id_rsa
+          echo "$ANSIBLE_PRIVATE_KEY" > .ssh/id_rsa
 
       - name: Add host to known_hosts
-        run: ssh-keyscan -t rsa 212.57.126.138 >> ~/.ssh/known_hosts
+        run: ssh-keyscan -t rsa 212.57.126.138 >> .ssh/known_hosts
 
       - name: Run Ansible playbook
         run: |
