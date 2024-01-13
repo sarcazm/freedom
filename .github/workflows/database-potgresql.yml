@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Ansible playbook
         run: |
-          ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
+          ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root --private-key=$HOME/.ssh/id_rsa
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
