@@ -28,7 +28,7 @@ jobs:
           playbook: playbooks/database/server-1.yaml
           directory: ./
           key: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
-          inventory: inventory/inventory
+          inventory: ${{ secrets.ANSIBLE_INVENTORY }}
 #        run: |
 #          ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
 #        env:
