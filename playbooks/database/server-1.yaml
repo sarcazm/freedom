@@ -21,7 +21,7 @@
     vg: data
     pvs: /dev/vdb
     lv: postgresql_logs
-    lv_size: 10M
+    lv_size: 20M
     device_path: /dev/data/postgresql_logs
     directory: /var/log/postgresql
 
