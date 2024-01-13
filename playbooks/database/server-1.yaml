@@ -1,7 +1,7 @@
 ---
 - name: Create lvm for postgresql data
   become: yes
-  hosts: production
+  hosts: services-servers
   roles:
     - ./roles/lvm
   vars:
@@ -14,7 +14,7 @@
 
 - name: Create lvm for postgresql logs
   become: yes
-  hosts: production
+  hosts: services-servers
   roles:
     - ./roles/lvm
   vars:
@@ -27,7 +27,7 @@
 
 - name: Install Postgresql
   become: yes
-  hosts: production
+  hosts: services-servers
   roles:
     - ./roles/postgresql-server
   vars:
@@ -36,7 +36,7 @@
 
 - name: Create Postgresql databases
   become: yes
-  hosts: production
+  hosts: services-servers
   roles:
     - ./roles/postgresql-database
   vars:
@@ -45,7 +45,7 @@
 
 - name: Create service user with access to Postgresql databases
   become: yes
-  hosts: production
+  hosts: services-servers
   roles:
     - ./roles/postgresql-user
   vars:
