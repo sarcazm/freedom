@@ -1,2 +1,2 @@
 [services-servers]
-freedom.home.ru ansible_host=212.57.126.138 ansible_port=22
+212.57.126.138
