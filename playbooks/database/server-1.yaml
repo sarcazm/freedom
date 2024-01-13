@@ -49,8 +49,8 @@
   roles:
     - ./roles/postgresql-user
   vars:
-    user_name: {{ POSTGRES_USER }}
-    user_password: {{ POSTGRES_PASSWORD }}
+    user_name: "{{ POSTGRES_USER }}"
+    user_password: "{{ POSTGRES_PASSWORD }}"
     privileges: ALL
     databases:
       - freedom
