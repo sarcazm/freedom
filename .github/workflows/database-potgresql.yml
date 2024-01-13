@@ -25,12 +25,14 @@ jobs:
 
 
       - name: Setup Key
+        uses: actions/checkout@v4
         run: |
           mkdir "$HOME/.ssh"
           echo "${{ secrets.ANSIBLE_PRIVATE_KEY }}" > "$HOME/.ssh/id_rsa"
           chmod 600 "$HOME/.ssh/id_rsa"
 
       - name: Run Ansible playbook
+        uses: actions/checkout@v4
         run: |
           ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root --private-key=$HOME/.ssh/id_rsa
         env:
