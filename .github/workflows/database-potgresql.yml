@@ -12,16 +12,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ansible
 
-#      - name: Add SSH key to agent
-#        env:
-#          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
-#        run: |
-#          install -m 600 -D /dev/null ~/.ssh/id_rsa
-#          echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_rsa
-#
-#      - name: Add host to known_hosts
-#        run: ssh-keyscan -t rsa 212.57.126.138 >> ~/.ssh/known_hosts
-
       - name: Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@v2.5.0
         with:
@@ -29,7 +19,6 @@ jobs:
           directory: ./
           key: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
           inventory: ${{ secrets.ANSIBLE_INVENTORY }}
-#        run: |
-#          ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
-#        env:
-#          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}

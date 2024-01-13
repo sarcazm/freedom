@@ -1,7 +1,7 @@
 ---
 - name: Create lvm for postgresql data
   become: yes
-  hosts: freedom.home.ru
+  hosts: production
   roles:
     - ./roles/lvm
   vars:
@@ -14,7 +14,7 @@
 
 - name: Create lvm for postgresql logs
   become: yes
-  hosts: freedom.home.ru
+  hosts: production
   roles:
     - ./roles/lvm
   vars:
@@ -27,7 +27,7 @@
 
 - name: Install Postgresql
   become: yes
-  hosts: freedom.home.ru
+  hosts: production
   roles:
     - ./roles/postgresql-server
   vars:
@@ -36,7 +36,7 @@
 
 - name: Create Postgresql databases
   become: yes
-  hosts: freedom.home.ru
+  hosts: production
   roles:
     - ./roles/postgresql-database
   vars:
@@ -45,12 +45,12 @@
 
 - name: Create service user with access to Postgresql databases
   become: yes
-  hosts: freedom.home.ru
+  hosts: production
   roles:
     - ./roles/postgresql-user
   vars:
-    user_name: freedom-butler
-    user_password: p5DhmwF~vgmkgSeH
+    user_name: {{ POSTGRES_USER }}
+    user_password: {{ POSTGRES_PASSWORD }}
     privileges: ALL
     databases:
       - freedom
