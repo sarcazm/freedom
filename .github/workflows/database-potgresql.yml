@@ -12,13 +12,27 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ansible
 
+#      - name: Run Ansible playbook
+#        uses: dawidd6/action-ansible-playbook@v2.5.0
+#        with:
+#          playbook: playbooks/database/server-1.yaml
+#          directory: ./
+#          key: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+#          inventory: ${{ secrets.ANSIBLE_INVENTORY }}
+#        env:
+#          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
+
+      - name: Setup Key
+        run: |
+          mkdir "$HOME/.ssh"
+          echo "${{ ANSIBLE_PRIVATE_KEY }}" > "$HOME/.ssh/id_rsa"
+          chmod 600 "$HOME/.ssh/id_rsa"
+
       - name: Run Ansible playbook
-        uses: dawidd6/action-ansible-playbook@v2.5.0
-        with:
-          playbook: playbooks/database/server-1.yaml
-          directory: ./
-          key: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
-          inventory: ${{ secrets.ANSIBLE_INVENTORY }}
+        run: |
+          ansible-playbook -vvvv -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
