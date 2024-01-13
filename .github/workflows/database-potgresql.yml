@@ -7,24 +7,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-     # - name: Install Ansible
-     #   run: |
-     #     sudo apt-get update
-     #     sudo apt-get install -y ansible
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
 
       - name: Setup Key
         run: |
           mkdir "$HOME/.ssh"
-          echo "${{ secrets.ANSIBLE_PRIVATE_KEY }}" > "$HOME/.ssh/id_rsa"
+          echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/id_rsa"
           chmod 700 "$HOME/.ssh/"
           chmod 600 "$HOME/.ssh/id_rsa"
 
-      #- name: Run Ansible playbook
-      #  run: |
-      #    ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root --private-key=$HOME/.ssh/id_rsa
-      #  env:
-      #    POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      #    POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-
-      - name: Debug Key
-        run: cat $HOME/.ssh/id_rsa
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i inventory/inventory -f 1 playbooks/database/server-1.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root --private-key=$HOME/.ssh/id_rsa
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
