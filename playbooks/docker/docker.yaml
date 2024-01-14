@@ -1,0 +1,6 @@
+---
+- name: Docker installation
+  become: yes
+  hosts: services-servers
+  roles:
+    - ./roles/docker

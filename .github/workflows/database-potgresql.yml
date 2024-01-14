@@ -1,7 +1,7 @@
 name: Install Database Postgresql
 on: workflow_dispatch
 jobs:
-  install_database_postgresql:
+  install-postgresql:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

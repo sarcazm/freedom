@@ -1,0 +1,12 @@
+name: Install Docker
+on: workflow_dispatch
+jobs:
+  install-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i inventory/inventory -f 1 playbooks/docker/docker.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
