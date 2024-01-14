@@ -1,0 +1,47 @@
+- name: Install lvm2
+  become: yes
+  apt:
+    name: lvm2
+    state: latest
+    update_cache: true
+
+- name: Create a volume group
+  lvg:
+    vg: data
+    pvs: /dev/vdb
+
+- name: Create a logical volume for prometheus data
+  become: yes
+  lvol:
+    state: present
+    vg: data
+    lv: prometheus_data
+    size: 500M
+    pvs: /dev/vdb
+
+- name: Install xfsprogs
+  become: yes
+  apt:
+    name: xfsprogs
+    state: latest
+    update_cache: true
+
+- name: Create a xfs filesystem
+  become: yes
+  filesystem:
+    fstype: xfs
+    dev: /dev/data/prometheus_data
+
+- name: Creates prometheus data directory
+  become: yes
+  file:
+    path: /opt/prometheus/data
+    state: directory
+
+- name: Mount prometheus data directory
+  become: yes
+  mount:
+    src: /dev/data/prometheus_data
+    path: /opt/prometheus/data
+    fstype: xfs
+    state: mounted

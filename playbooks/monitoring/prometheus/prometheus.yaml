@@ -1,0 +1,6 @@
+---
+- name: Install and launch prometheus
+  hosts: services-servers
+  roles:
+    - ./roles/prometheus
+  become: yes

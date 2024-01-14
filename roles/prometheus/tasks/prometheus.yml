@@ -1,0 +1,29 @@
+- name: Create prometheus config directory
+  file:
+    path: /etc/prometheus/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy prometheus config file
+  copy:
+    src: prometheus.yml
+    dest: /etc/prometheus/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Launch prometheus in docker
+  become: yes
+  docker_container:
+    user: root
+    name: prometheus
+    image: prom/prometheus:latest
+    state: started
+    restart: true
+    ports:
+      - 3000:9090
+    volumes:
+      - /etc/prometheus/:/etc/prometheus/
+      - /opt/prometheus/data/:/prometheus/

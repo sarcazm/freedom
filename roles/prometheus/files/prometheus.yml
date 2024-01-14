@@ -1,0 +1,79 @@
+global:
+  scrape_interval: 13s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+alerting:
+  alertmanagers:
+    - follow_redirects: true
+      scheme: http
+      timeout: 10s
+      api_version: v2
+      static_configs:
+        - targets: [ ]
+scrape_configs:
+
+  # Databases
+
+  - job_name: "database_nodes_metrics"
+    static_configs:
+      - targets: [ "database-server-1.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: database
+          instance: database server 1
+      - targets: [ "database-server-2.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: database
+          instance: database server 2
+      - targets: [ "database-server-3.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: database
+          instance: database server 3
+      - targets: [ "database-server-4.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: database
+          instance: database server 4
+      - targets: [ "database-server-5.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: database
+          instance: database server 5
+  # Services
+
+  - job_name: "service_nodes_metrics"
+    static_configs:
+      - targets: [ "services-server-1.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: service
+          instance: services server 1
+      - targets: [ "services-server-2.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: service
+          instance: services server 2
+      - targets: [ "services-server-3.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: service
+          instance: services server 3
+
+  # Admin
+
+  - job_name: "admin_nodes_metrics"
+    static_configs:
+      - targets: [ "admin-1.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: admin
+          component: monitoring
+          instance: grafana and prometheus
+      - targets: [ "loki.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: admin
+          component: monitoring
+          instance: loki
+      - targets: [ "gitlab-runner.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: admin
+          component: gitlab runner
+          instance: gitlab runner
+      - targets: [ "jumphost.gunter-prod-1.salt.x5.ru:9273" ]
+        labels:
+          type: admin
+          component: jumphost
+          instance: jumphost

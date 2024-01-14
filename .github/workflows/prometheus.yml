@@ -1,0 +1,25 @@
+name: Install Prometheus
+on: workflow_dispatch
+jobs:
+  install-prometheus:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Setup Key
+        run: |
+          mkdir "$HOME/.ssh"
+          echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/id_rsa"
+          chmod 700 "$HOME/.ssh/"
+          chmod 600 "$HOME/.ssh/id_rsa"
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i inventory/inventory -f 1 playbooks/monitoring/prometheus/prometheus.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root

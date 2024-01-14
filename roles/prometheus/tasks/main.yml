@@ -1,0 +1,4 @@
+---
+- include_tasks: lvm.yml
+- include_tasks: prometheus.yml
+- include_tasks: restart.yml

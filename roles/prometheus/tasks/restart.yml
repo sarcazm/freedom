@@ -1,0 +1,6 @@
+- name: Restart prometheus in docker
+  become: yes
+  docker_container:
+    name: prometheus
+    state: started
+    restart: true
