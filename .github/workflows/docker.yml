@@ -6,7 +6,7 @@ jobs:
     steps:
 
       - name: Setup Ansible and Key
-        uses: workflows/setup-ansible.yml
+        uses: .github/workflows/setup-ansible.yml
 
       - name: Run Ansible playbook
         run: |
