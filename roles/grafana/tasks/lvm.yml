@@ -17,7 +17,7 @@
     state: present
     vg: data
     lv: grafana
-    size: 1G
+    size: 500M
     pvs: /dev/vdb
 
 - name: Install xfsprogs
