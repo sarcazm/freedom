@@ -1,14 +1,8 @@
 name: Setup Ansible and Key
-
-on:
-  push:
-    branches:
-      - main
-
+on: workflow_dispatch
 jobs:
-  setup:
+  setup-ansible:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

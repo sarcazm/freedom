@@ -4,9 +4,6 @@ jobs:
   install-docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
 
       - name: Setup Ansible and Key
         uses: ./.github/workflows/setup-ansible.yml
