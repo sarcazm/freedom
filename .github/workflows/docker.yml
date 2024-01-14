@@ -7,6 +7,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache Ansible and SSH keys
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.ansible
+            ~/.ssh
+
       - name: Install Ansible
         run: |
           sudo apt-get update
