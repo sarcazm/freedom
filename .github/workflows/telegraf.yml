@@ -1,4 +1,4 @@
-name: Install Prometheus
+name: Install Telegraf
 on: workflow_dispatch
 jobs:
   install-telegraf:
