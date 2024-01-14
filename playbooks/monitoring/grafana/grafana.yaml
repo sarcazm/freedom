@@ -1,0 +1,6 @@
+---
+- name: Launch grafana
+  hosts: services-servers
+  roles:
+    - ./roles/grafana
+  become: yes

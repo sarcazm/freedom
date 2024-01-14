@@ -1,0 +1,48 @@
+---
+- name: Install lvm2
+  become: yes
+  apt:
+    name: lvm2
+    state: latest
+    update_cache: true
+
+- name: Create a volume group
+  lvg:
+    vg: data
+    pvs: /dev/vdb
+
+- name: Create a logical volume for grafana data
+  become: yes
+  lvol:
+    state: present
+    vg: data
+    lv: grafana
+    size: 1G
+    pvs: /dev/vdb
+
+- name: Install xfsprogs
+  become: yes
+  apt:
+    name: xfsprogs
+    state: latest
+    update_cache: true
+
+- name: Create a xfs filesystem
+  become: yes
+  filesystem:
+    fstype: xfs
+    dev: /dev/data/grafana
+
+- name: Creates grafana data directory
+  become: yes
+  file:
+    path: /opt/grafana/data
+    state: directory
+
+- name: Mount grafana data directory
+  become: yes
+  mount:
+    src: /dev/data/grafana
+    path: /opt/grafana/data
+    fstype: xfs
+    state: mounted

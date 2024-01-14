@@ -1,0 +1,14 @@
+---
+- name: Launch grafana in docker
+  become: yes
+  docker_container:
+    user: root
+    name: grafana
+    image: grafana/grafana-image-renderer:latest
+    state: started
+    restart_policy: always
+    restart: true
+    ports:
+      - 3000:3000
+    volumes:
+      - /opt/grafana/data/:/var/lib/grafana/

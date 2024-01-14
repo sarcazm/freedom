@@ -1,9 +1,10 @@
-name: Setup Ansible and Key
+name: Install Grafana
 on: workflow_dispatch
 jobs:
-  setup-ansible:
+  install-grafana:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -18,3 +19,7 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/id_rsa"
           chmod 700 "$HOME/.ssh/"
           chmod 600 "$HOME/.ssh/id_rsa"
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i inventory/inventory -f 1 playbooks/monitoring/grafana/grafana.yaml --ssh-common-args='-o StrictHostKeyChecking=no' -u root
