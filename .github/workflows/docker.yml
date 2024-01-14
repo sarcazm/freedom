@@ -7,7 +7,7 @@ jobs:
 
       - name: Setup Ansible and Key
         run: |
-          bash ./.github/scripts/setup-ansible-and-key.sh
+          bash .github/scripts/setup-ansible-and-key.sh
 
       - name: Run Ansible playbook
         run: |
