@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup Ansible and Key
         run: |
           bash .github/scripts/setup-ansible-and-key.sh
