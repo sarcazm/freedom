@@ -49,8 +49,8 @@
   roles:
     - ./roles/postgresql-user
   vars:
-    user_name: "{{ lookup('env', 'POSTGRES_USER' }}"
-    user_password: "{{ lookup('env', 'POSTGRES_PASSWORD' }}"
+    user_name: "{{ lookup('env', 'POSTGRES_USER') }}"
+    user_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
     privileges: ALL
     databases:
       - freedom
