@@ -6,7 +6,8 @@ jobs:
     steps:
 
       - name: Setup Ansible and Key
-        uses: ./.github/scripts/setup-ansible-and-key.sh
+        run: |
+          bash ./.github/scripts/setup-ansible-and-key.sh
 
       - name: Run Ansible playbook
         run: |
