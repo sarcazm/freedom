@@ -8,9 +8,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Ansible and Key
+      - name: Install Ansible
         run: |
-          bash .github/scripts/setup-ansible-and-key.sh
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Setup Key
+        run: |
+          mkdir "$HOME/.ssh"
+          echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/id_rsa"
+          chmod 700 "$HOME/.ssh/"
+          chmod 600 "$HOME/.ssh/id_rsa"
 
       - name: Run Ansible playbook
         run: |
