@@ -23,7 +23,7 @@
     state: started
     restart: true
     ports:
-      - 3000:9090
+      - 9090:9090
     volumes:
       - /etc/prometheus/:/etc/prometheus/
       - /opt/prometheus/data/:/prometheus/
