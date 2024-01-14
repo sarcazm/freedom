@@ -4,7 +4,7 @@
   docker_container:
     user: root
     name: grafana
-    image: grafana/grafana-image-renderer:latest
+    image: grafana/grafana:latest
     state: started
     restart_policy: always
     restart: true
