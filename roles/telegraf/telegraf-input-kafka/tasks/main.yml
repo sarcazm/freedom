@@ -1,0 +1,27 @@
+---
+- name: Copy kafka input config file
+  become: yes
+  copy:
+    src: inputs_kafka.conf
+    dest: /etc/telegraf/telegraf.d/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy kafka lag input config file
+  become: yes
+  copy:
+    src: inputs_kafka_lag.conf
+    dest: /etc/telegraf/telegraf.d/
+    owner: root
+    group: root
+    mode: 0644
+
+##- name: Copy kafka net response config file
+##  become: yes
+##  copy:
+##    src: inputs_kafka_net_response.conf
+##    dest: /etc/telegraf/telegraf.d/
+##    owner: root
+##    group: root
+##    mode: 0644

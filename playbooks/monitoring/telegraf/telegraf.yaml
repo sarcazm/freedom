@@ -1,0 +1,49 @@
+---
+- import_playbook: installation.yaml
+
+- name: Configure system inputs
+  hosts: all
+  roles:
+    - ./roles/telegraf/telegraf-input-system
+
+- name: Configure disk inputs
+  hosts: all
+  roles:
+    - ./roles/telegraf/telegraf-input-disk
+  tasks:
+
+- name: Configure lvm inputs
+  hosts: database-servers
+  roles:
+    - ./roles/telegraf/telegraf-input-lvm
+  tasks:
+
+- name: Configure docker inputs
+  hosts: services-servers
+  roles:
+    - ./roles/telegraf/telegraf-input-docker
+  tasks:
+    - name: Restart telegraf service
+      become: yes
+      systemd:
+        name: telegraf
+        state: restarted
+
+- name: Configure postgresql input
+  become: yes
+  hosts: services-servers
+  roles:
+    - ./roles/telegraf/telegraf-input-postgresql
+  vars:
+    user: postgres
+    password: postgres
+
+- name: Restart telegraf
+  hosts: all
+  tasks:
+    - name: Restart telegraf service
+      become: yes
+      systemd:
+        name: telegraf
+        state: restarted
+        daemon_reload: true

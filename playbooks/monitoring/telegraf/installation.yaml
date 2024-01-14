@@ -1,0 +1,11 @@
+---
+- name: Install telegraf
+  hosts: all
+  roles:
+    - ./roles/telegraf/telegraf-client
+  tasks:
+    - name: Stop telegraf service
+      become: yes
+      systemd:
+        name: telegraf
+        state: stopped

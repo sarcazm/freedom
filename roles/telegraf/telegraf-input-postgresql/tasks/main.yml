@@ -1,0 +1,9 @@
+---
+- name: Template telegraf postgresql input config file
+  become: yes
+  template:
+    src: inputs_postgresql.conf.j2
+    dest: /etc/telegraf/telegraf.d/inputs_postgresql.conf
+    owner: root
+    group: root
+    mode: 0644

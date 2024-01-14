@@ -1,0 +1,14 @@
+---
+- name: Copy telegraf docker input config file
+  become: yes
+  copy:
+    src: inputs_docker.conf
+    dest: /etc/telegraf/telegraf.d/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Add srv.bmo to docker group
+  become: yes
+  shell:
+    cmd: sudo usermod -aG docker srv.bmo

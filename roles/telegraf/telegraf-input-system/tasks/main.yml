@@ -1,0 +1,9 @@
+---
+- name: Copy telegraf systems input config file
+  become: yes
+  copy:
+    src: inputs_system.conf
+    dest: /etc/telegraf/telegraf.d/
+    owner: root
+    group: root
+    mode: 0644

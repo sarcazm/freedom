@@ -1,0 +1,56 @@
+---
+- name: Creates telegraf opt directory
+  become: yes
+  file:
+    path: /opt/telegraf/
+    state: directory
+    owner: root
+
+- name: Download key
+  get_url:
+    url: https://repos.influxdata.com/influxdb.key
+    dest: /opt/telegraf/influxdata-archive_compat.key
+
+- name: Add repository
+  become: yes
+  shell:
+    cmd: echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c /opt/telegraf/influxdata-archive_compat.key' | sha256sum -c && cat /opt/telegraf/influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+
+- name: Add repository
+  become: yes
+  shell:
+    cmd: echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/ubuntu latest stable' | sudo tee /etc/apt/sources.list.d/influxdata.list
+
+- name: Update apt and install telegraf
+  become: yes
+  apt:
+    name: telegraf
+    state: latest
+    update_cache: true
+
+- name: Copy telegraf service systemd file
+  become: yes
+  copy:
+    src: telegraf.service
+    dest: /lib/systemd/system/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy telegraf service configuration file
+  become: yes
+  copy:
+    src: telegraf.conf
+    dest: /etc/telegraf/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy telegraf outputs configuration file
+  become: yes
+  copy:
+    src: outputs_prometheus.conf
+    dest: /etc/telegraf/telegraf.d/
+    owner: root
+    group: root
+    mode: 0644
