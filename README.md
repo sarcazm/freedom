@@ -7,4 +7,4 @@
 #### 4) Установка Prometheus
 #### 5) Установка Docker
 #### 6) Установка Grafana
-#### 7) Установка Telegraf
+#### 7) Установка Telegrafddddd
