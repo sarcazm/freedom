@@ -21,13 +21,20 @@
   become: yes
   shell:
     cmd: echo 'f5f72167ff0de0f9f82727eaa04825cae51e2babdb552f0100ba8d6745f501b8 /opt/telegraf/influxdata-archive_compat.key' | sha256sum -c && \
-      gpg --import /opt/telegraf/influxdata-archive_compat.key
+      /usr/bin/gpg --import /opt/telegraf/influxdata-archive_compat.key
 
 - name: Add repository
   become: yes
   shell:
     cmd: echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/ubuntu focal stable' | \
       sudo tee /etc/apt/sources.list.d/influxdata.list
+
+- name: Update apt cache and install telegraf
+  become: yes
+  apt:
+    name: telegraf
+    update_cache: yes
+    state: latest
 
 - name: Update apt and install telegraf
   become: yes
