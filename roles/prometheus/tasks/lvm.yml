@@ -16,7 +16,7 @@
     state: present
     vg: data
     lv: prometheus_data
-    size: 500M
+    size: 1G
     pvs: /dev/vdb
 
 - name: Install xfsprogs
