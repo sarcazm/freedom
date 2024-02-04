@@ -11,6 +11,12 @@
     url: https://repos.influxdata.com/influxdb.key
     dest: /opt/telegraf/influxdata-archive_compat.key
 
+- name: Install GPG
+  become: yes
+  apt:
+    name: gnupg
+    state: present
+
 - name: Add repository key
   become: yes
   shell:
