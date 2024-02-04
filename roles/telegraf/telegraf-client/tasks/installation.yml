@@ -10,18 +10,15 @@
   get_url:
     url: https://repos.influxdata.com/influxdb.key
     dest: /opt/telegraf/influxdata-archive_compat.key
-
-- name: Add repository key
-  become: yes
-  shell:
-    cmd: echo 'f5f72167ff0de0f9f82727eaa04825cae51e2babdb552f0100ba8d6745f501b8 /opt/telegraf/influxdata-archive_compat.key' | sha256sum -c && \
-      gpg --import /opt/telegraf/influxdata-archive_compat.key
+    checksum: sha256:393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c
+    validate_certs: yes
 
 - name: Add repository
+  apt_key:
+    url: file:///opt/telegraf/influxdata-archive_compat.key
+    state: present
   become: yes
-  shell:
-    cmd: echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/ubuntu latest stable' | \
-      sudo tee /etc/apt/sources.list.d/influxdata.list
+
 
 - name: Update apt and install telegraf
   become: yes
